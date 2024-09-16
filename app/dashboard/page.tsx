@@ -1,10 +1,10 @@
-import Notes from "../ui/dashboard/notes";
+import AllNotes from "../ui/dashboard/notes";
 import Footer from "../ui/dashboard/footer";
 
 export default async function Page() {
     return (
         <div>
-            <Notes />
+            <AllNotes />
             <footer>
                 <Footer />
             </footer>
