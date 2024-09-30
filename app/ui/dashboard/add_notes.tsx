@@ -1,12 +1,8 @@
-"use client";
-
 import { useState, useEffect } from "react";
-import { fetchSavedNotes, saveNotes } from "@/app/dashboard/lib/data";
-import { Notes } from "../../dashboard/lib/definitions";
 
 export default function CreateNote() {
-    const [id, setId] = useState(0);
-    const [oldNotes, setOldNotes] = useState([{}]);
+    const [click, setClick] = useState(0);
+    const [isLoading, setIsLoading] = useState(false);
     const [createNote, setCreateNote] = useState({
         title: "",
         content: "",
@@ -25,22 +21,66 @@ export default function CreateNote() {
         console.log(createNote);
     }
 
-    async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-        event.preventDefault();
-        var lastID = 0;
-        var data = await fetchSavedNotes();
-        const keys = Object.keys(data); // Obtenemos un array con todos las keys
-        var intKeys = keys.map(Number); // Convertimos los keys de String a Int
-        const biggestKey = Math.max(...intKeys); // Buscamos el numero mas grande
+    useEffect(() => {
+        var id = 0;
+        if (click === 0) return;
 
-        if (keys.length !== 0) {
-            lastID = biggestKey + 1;
-        }
-        // Agregar la nueva nota
-        Object.assign(data, { [`${lastID}`]: createNote });
-        // Guardamos todas las notas
-        await saveNotes(data);
+        fetch("/api", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(createNote),
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(
+                        "Error al añadir la nota: " + response.status
+                    );
+                }
+                return response.json(); // Convertir la respuesta a JSON
+            })
+            .then((data) => {
+                id = data.id;
+                console.log(id);
+
+                //onLoad({ [`${id}`]: createNote });
+            })
+            .catch((error) => console.error("Error connecting to API:", error))
+            .finally(() => {
+                setIsLoading(false);
+            });
+    }, [click]);
+
+    function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+        event.preventDefault();
+        setIsLoading(true);
+        // Incrementar el contador para que la petición se
+        // ejecute cada vez que se envía el formulario
+        setClick(click + 1);
     }
+    /* try {
+            const response = await fetch("/api", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(createNote),
+            });
+
+            var id = 0;
+
+            if (response.ok) {
+                const data = await response.json();
+                id = data.id;
+            } else {
+                console.error("Error:", response.status);
+                return;
+            }
+            //onLoad({ [`${id}`]: createNote });
+        } catch (error) {
+            console.error("Error connecting to API");
+        } */
 
     return (
         <div>
@@ -58,8 +98,12 @@ export default function CreateNote() {
                     onChange={handleInputTitle}
                     placeholder="Take a note..."
                 />
-                <button type="submit">Add</button>
+                <button disabled={isLoading} type="submit">
+                    {isLoading ? "Adding" : "Add"}
+                </button>
             </form>
         </div>
     );
 }
+
+// https://nextjs.org/docs/pages/building-your-application/data-fetching/forms-and-mutations

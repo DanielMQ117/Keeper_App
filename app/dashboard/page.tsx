@@ -1,14 +1,24 @@
+"use client";
+
 import AllNotes from "../ui/dashboard/notes";
 import Footer from "../ui/dashboard/footer";
 import CreateNote from "../ui/dashboard/add_notes";
 
-export default async function Page() {
+import { useState } from "react";
+
+export default function Page() {
+    // const [newNote, setNewNote] = useState({});
+
+    // function handleClientNotes(loadedNotes: any) {
+    //     setNewNote(loadedNotes);
+    // }
+
     return (
         <div>
             <div>
                 <CreateNote />
             </div>
-            <AllNotes />
+            {/* <AllNotes note={newNote} /> */}
             <footer>
                 <Footer />
             </footer>

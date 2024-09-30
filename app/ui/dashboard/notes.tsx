@@ -1,4 +1,5 @@
-import fetchNotes from "@/app/dashboard/lib/data";
+import { fetchSavedNotes } from "@/app/dashboard/lib/data";
+import { useState } from "react";
 
 function Notes(props: any) {
     return (
@@ -9,16 +10,29 @@ function Notes(props: any) {
     );
 }
 
-export default async function AllNotes() {
-    const allNotes = await fetchNotes();
+export default async function AllNotes({
+    note,
+}: {
+    note: {
+        [key: string]: {
+            title: string;
+            content: string;
+        };
+    };
+}) {
+    // const allNotes = await fetchNotes();
+    // const oldNotes = await fetchSavedNotes();
+
+    //const [notes, setNotes] = useState();
+
     return (
         <>
-            {allNotes.map((note) => {
+            {Object.keys(note).forEach((id) => {
                 return (
                     <Notes
-                        key={note.key}
-                        title={note.title}
-                        content={note.content}
+                        key={id}
+                        title={note[id]["title"]}
+                        content={note[id]["content"]}
                     />
                 );
             })}
