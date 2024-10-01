@@ -5,20 +5,21 @@ import Footer from "../ui/dashboard/footer";
 import CreateNote from "../ui/dashboard/add_notes";
 
 import { useState } from "react";
+import * as Type from "./lib/definitions";
 
 export default function Page() {
-    // const [newNote, setNewNote] = useState({});
+    const [newNote, setNewNote] = useState<Type.AllNotes>({});
 
-    // function handleClientNotes(loadedNotes: any) {
-    //     setNewNote(loadedNotes);
-    // }
+    function handleIncomingNote(incomingNote: Type.AllNotes = {}) {
+        setNewNote(incomingNote);
+    }
 
     return (
         <div>
             <div>
-                <CreateNote />
+                <CreateNote onLoad={handleIncomingNote} />
             </div>
-            {/* <AllNotes note={newNote} /> */}
+            <AllNotes note={newNote} />
             <footer>
                 <Footer />
             </footer>

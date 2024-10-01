@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
+import * as Type from "@/app/dashboard/lib/definitions";
 
-export default function CreateNote() {
+export default function CreateNote({ onLoad }: { onLoad: Function }) {
     const [click, setClick] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
-    const [createNote, setCreateNote] = useState({
+    const [createNote, setCreateNote] = useState<Type.Note>({
         title: "",
         content: "",
     });
@@ -44,7 +45,7 @@ export default function CreateNote() {
                 id = data.id;
                 console.log(id);
 
-                //onLoad({ [`${id}`]: createNote });
+                onLoad({ [`${id}`]: createNote });
             })
             .catch((error) => console.error("Error connecting to API:", error))
             .finally(() => {
