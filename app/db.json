@@ -14,5 +14,29 @@
     "7": {
         "title": "Last request",
         "content": "Deleted."
+    },
+    "8": {
+        "title": "Hola",
+        "content": "Desde el phone"
+    },
+    "11": {
+        "title": "Align Content",
+        "content": "Stretch"
+    },
+    "12": {
+        "title": "flex-flow",
+        "content": "1 shrink 0"
+    },
+    "13": {
+        "title": "flex-wrap:",
+        "content": "wrap-reverse;"
+    },
+    "17": {
+        "title": "Me doy",
+        "content": "Give up, by now! XD until tomorrow. "
+    },
+    "18": {
+        "title": "",
+        "content": ""
     }
 }

@@ -13,8 +13,12 @@ function Note(props: Type.Note) {
 export default function AllNotes({ note }: { note: Type.AllNotes }) {
     const [allNotes, setAllNotes] = useState<Type.AllNotes>({});
 
+    console.log("-> Debug 1");
+    console.log("Fetching revenue data...");
+    new Promise((resolve) => setTimeout(resolve, 5000));
+    console.log("Data fetch completed after 5 seconds.");
+    
     useEffect(() => {
-        console.log("-> Debug 1");
 
         fetch("/api", {
             method: "GET",
@@ -52,9 +56,6 @@ export default function AllNotes({ note }: { note: Type.AllNotes }) {
 
     return (
         <>
-            <div style={{ margin: "5px 50px" }}>
-                <h1>Hola</h1>
-            </div>
             {Object.keys(allNotes).map((key) => (
                 <Note
                     key={key}

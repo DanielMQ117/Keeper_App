@@ -1,30 +1,3 @@
-:root {
-  --background: #eee;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  padding: 0 16px;
-}
-
 * {
   box-sizing: border-box;
   padding: 0;
@@ -36,48 +9,111 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+html {
+  font-family: "Montserrat", sans-serif;
+}
+
+body {
+  min-height: 100svh;
+  background: #eee;
+  padding: 0;
+  background-image: radial-gradient(circle, rgba(242, 222, 255, 0.9) 0%, rgba(255, 186, 211, 0.9) 44%, rgba(255, 207, 139, 0.9) 100%), url("../../public/fondo-compras-360w.jpeg");
+  background-size: auto;
+  /* Cover the entire viewport */
+  background-position: center;
+  /* Center the image */
+  background-repeat: repeat;
+  /* Don't repeat the image */
+}
+
+.app {
+  height: 100svh;
+  display: grid;
+  row-gap: 25px;
+  grid-template-rows: 78px auto;
 }
 
 header {
-  background-color: #f5ba13;
-  margin: auto -16px;
-  padding: 16px 32px;
+  height: 78px;
+  width: auto;
+  background-color: gold;
+  margin-bottom: 30px;
+  padding: 16px 32px 0 32px;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
 }
 
 header h1 {
   color: #fff;
+  font-size: 2rem;
   font-weight: 200;
 }
 
+.main-container {
+  display: grid;
+  row-gap: 20px;
+  align-items: stretch;
+  grid-template-rows: 166px 42px auto 40px;
+  width: 100%;
+  height: auto;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
 footer {
-  position: absolute;
+  position: relative;
   text-align: center;
   bottom: 0;
-  width: 100%;
+  width: auto;
   height: 2.5rem;
+  margin: 0;
+  background-color: gold;
 }
 
 footer p {
-  color: #ccc;
-  font-size: 1em;
+  color: #fff;
+  font-size: 1rem;
+  height: 40px;
+  padding: 10px 0 0 0;
+}
+
+.greender>h1 {
+  font-size: 2rem;
+  margin-left: 5%;
+}
+
+.container-notes {
+  height: min-content;
+  margin: 5%;
+  margin-top: 0;
+  margin-bottom: 20px;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row-reverse;
+  align-items: flex-end;
+  flex-wrap: wrap-reverse;
+  row-gap: 16px;
+  column-gap: 16px;
 }
 
 .note {
+  color: black;
   background: #fff;
   border-radius: 7px;
   box-shadow: 0 2px 5px #ccc;
   padding: 10px;
   width: 240px;
-  margin: 16px;
+  margin: 2px;
   float: left;
 }
 
 .note h1 {
+  color: black;
+  background-color: gainsboro;
   font-size: 1.1em;
   margin-bottom: 6px;
 }
@@ -89,10 +125,22 @@ footer p {
   word-wrap: break-word;
 }
 
+.note button {
+  position: relative;
+  float: right;
+  margin-right: 10px;
+  color: gold;
+  border: none;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  outline: none;
+}
+
 form {
   position: relative;
-  width: 480px;
-  margin: 30px auto 20px auto;
+  height: 146px;
+  max-width: calc((100vw - 60%) * 1.000);
   background: #fff;
   padding: 15px;
   border-radius: 7px;
@@ -101,6 +149,7 @@ form {
 
 form input,
 form textarea {
+  background: #fff;
   width: 100%;
   border: none;
   padding: 4px;
@@ -114,13 +163,48 @@ form button {
   position: absolute;
   right: 18px;
   bottom: -18px;
-  background: #f5ba13;
+  background: gold;
   color: #fff;
   border: none;
   border-radius: 50%;
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   cursor: pointer;
   outline: none;
+  font-family: inherit;
+}
+
+/* Contenedor del skeleton */
+.skeleton {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  /* Ajusta la altura según el contenido */
+  background-color: #e0e0e0;
+  /* Color base del skeleton */
+  overflow: hidden;
+}
+
+/* Efecto shimmer */
+.skeleton::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -150%;
+  /* Fuera de la pantalla inicialmente */
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.6),
+      transparent);
+  animation: shimmer 2s infinite;
+}
+
+/* Definición de la animación */
+@keyframes shimmer {
+  100% {
+    transform: translateX(150%);
+  }
 }

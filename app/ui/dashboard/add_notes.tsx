@@ -60,31 +60,8 @@ export default function CreateNote({ onLoad }: { onLoad: Function }) {
         // ejecute cada vez que se envía el formulario
         setClick(click + 1);
     }
-    /* try {
-            const response = await fetch("/api", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(createNote),
-            });
-
-            var id = 0;
-
-            if (response.ok) {
-                const data = await response.json();
-                id = data.id;
-            } else {
-                console.error("Error:", response.status);
-                return;
-            }
-            //onLoad({ [`${id}`]: createNote });
-        } catch (error) {
-            console.error("Error connecting to API");
-        } */
-
     return (
-        <div>
+        <div className="form-container">
             <form onSubmit={handleSubmit}>
                 <input
                     name="title"

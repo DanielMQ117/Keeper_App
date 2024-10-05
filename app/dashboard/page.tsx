@@ -3,9 +3,12 @@
 import AllNotes from "../ui/dashboard/notes";
 import Footer from "../ui/dashboard/footer";
 import CreateNote from "../ui/dashboard/add_notes";
+import Greender from "../ui/dashboard/greender";
 
 import { useState } from "react";
 import * as Type from "./lib/definitions";
+import { Suspense } from "react";
+import { NotesSkeleton } from "../ui/skeletons";
 
 export default function Page() {
     const [newNote, setNewNote] = useState<Type.AllNotes>({});
@@ -15,15 +18,20 @@ export default function Page() {
     }
 
     return (
-        <div>
-            <div>
+        <>
+            <div className="create-area">
                 <CreateNote onLoad={handleIncomingNote} />
             </div>
-            <AllNotes note={newNote} />
+            <div className="greender">
+                <Greender />
+            </div>
+            <div className="container-notes">
+                <AllNotes note={newNote} />
+            </div>
             <footer>
                 <Footer />
             </footer>
-        </div>
+        </>
     );
 }
 
