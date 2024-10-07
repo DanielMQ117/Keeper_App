@@ -2,12 +2,13 @@ import { useState, useEffect } from "react";
 import * as Type from "@/app/dashboard/lib/definitions";
 
 export default function CreateNote({ onLoad }: { onLoad: Function }) {
-    const [click, setClick] = useState(0);
-    const [isLoading, setIsLoading] = useState(false);
-    const [createNote, setCreateNote] = useState<Type.Note>({
+    const noteTemplate = {
         title: "",
         content: "",
-    });
+    };
+    const [click, setClick] = useState(0);
+    const [isLoading, setIsLoading] = useState(false);
+    const [createNote, setCreateNote] = useState<Type.Note>(noteTemplate);
 
     function handleInputTitle(
         event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -19,7 +20,6 @@ export default function CreateNote({ onLoad }: { onLoad: Function }) {
                 [name]: value,
             };
         });
-        console.log(createNote);
     }
 
     useEffect(() => {
@@ -47,6 +47,7 @@ export default function CreateNote({ onLoad }: { onLoad: Function }) {
             })
             .catch((error) => console.error("Error connecting to API:", error))
             .finally(() => {
+                setCreateNote(noteTemplate);
                 setIsLoading(false);
             });
     }, [click]);
