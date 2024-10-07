@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import * as Type from "@/app/dashboard/lib/definitions";
 
-function Note(props: Type.Note) {
+function Note(props: Type._Note) {
     return (
-        <>
+        <div className="note">
             <h1>{props.title}</h1>
             <p>{props.content}</p>
-        </>
+            <button onClick={() => props.onRemove(props.id)}>🗑️</button>
+        </div>
     );
 }
 
@@ -55,7 +56,7 @@ export default function AllNotes({ note }: { note: Type.AllNotes }) {
 
     function filterNotes(notes: Type.AllNotes, id: string): Type.AllNotes {
         const toArrayValues = Object.entries(notes);
-        const updateValues = toArrayValues.filter((note) => note[0] !== id);
+        const updateValues = toArrayValues.filter((item) => item[0] !== id);
         const toObjValues = Object.fromEntries(updateValues);
         return toObjValues;
     }
@@ -84,18 +85,15 @@ export default function AllNotes({ note }: { note: Type.AllNotes }) {
 
     return (
         <>
-            {Object.keys(allNotes).map((key) => {
+            {Object.keys(allNotes).map((ID) => {
                 return (
-                    <div className="note">
-                        <Note
-                            key={key}
-                            title={allNotes[key].title}
-                            content={allNotes[key].content}
-                        />
-                        <button onClick={() => handleRemoveClick(key)}>
-                            🗑️
-                        </button>
-                    </div>
+                    <Note
+                        key={ID}
+                        id={ID}
+                        title={allNotes[ID].title}
+                        content={allNotes[ID].content}
+                        onRemove={handleRemoveClick}
+                    />
                 );
             })}
         </>
