@@ -13,7 +13,6 @@ export default async function fetchNotes() {
 
 // Función para leer el archivo JSON usando fs.promises
 export async function fetchSavedNotes(): Promise<Type.AllNotes | {}> {
-    console.log(db);
     // Si el archivo existe, leer los datos actuales
     try {
         const jsonData = await fs.readFile(db, "utf8");
@@ -28,10 +27,15 @@ export async function fetchSavedNotes(): Promise<Type.AllNotes | {}> {
 
 // Función para escribir en el archivo JSON usando fs.promises
 export async function saveNotes(createNote: {}) {
-    var notesToSave = JSON.stringify(createNote, null, 4); // De OBJ Javascript a formato JSON
-    console.log(notesToSave);
-    await fs.writeFile(db, notesToSave, "utf8");
-    console.log("Nueva nota agregada correctamente.");
+    var notesToSave = JSON.stringify(createNote, null, 4); // De Obj Javascript a formato JSON
+    try {
+        await fs.writeFile(db, notesToSave, "utf8");
+        console.log("Notas guardadas.");
+        return 1;
+    } catch (err: any) {
+        console.error(err.message);
+        return 0;
+    }
 }
 
 // Función para obtener el siguiente ID para una nueva nota
@@ -45,11 +49,18 @@ export async function fetchLasdId(data: {}) {
 
 export async function deleteNote(removeNoteId: string) {
     const allNotes = await fetchSavedNotes();
-    const toArrayValues = Object.entries(allNotes);
-    const updateValues = toArrayValues.filter(
-        (note) => note[0] !== removeNoteId
-    );
-    const toObjValues = Object.fromEntries(updateValues);
-    await saveNotes(toObjValues);
-    return true;
+    try {
+        const toArrayValues = Object.entries(allNotes);
+        const updateValues = toArrayValues.filter(
+            (note) => note[0] !== removeNoteId
+        );
+        const toObjValues = Object.fromEntries(updateValues);
+        if (await saveNotes(toObjValues)) {
+            console.log("Nota eliminada.");
+            return 1;
+        }
+    } catch (err: any) {
+        console.error(err.message);
+    }
+    return 0;
 }

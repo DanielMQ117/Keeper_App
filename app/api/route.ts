@@ -14,22 +14,23 @@ export async function GET() {
 
 // POST: Para agregar una nueva nota
 export async function POST(request: Request) {
-    console.log("ENTRA");
-
     const newNote = await request.json();
     const oldNotes = await fetchSavedNotes();
     const ID = await fetchLasdId(oldNotes);
     // Agregar la nueva nota
     Object.assign(oldNotes, { [`${ID}`]: newNote });
-    await saveNotes(oldNotes);
+    const response = await saveNotes(oldNotes);
 
-    return NextResponse.json({ message: "Nota añadida con éxito", id: ID });
+    return NextResponse.json({
+        message: response
+            ? "Nota añadida con éxito"
+            : "Error al añadida la éxito",
+        id: ID,
+    });
 }
 
 // DELETE: Para eliminar una nota
 export async function DELETE(request: Request) {
-    console.log("HERE");
-
     const remobeNote = await request.json();
     const response = await deleteNote(remobeNote.id);
 

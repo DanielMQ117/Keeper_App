@@ -23,7 +23,6 @@ export default function CreateNote({ onLoad }: { onLoad: Function }) {
     }
 
     useEffect(() => {
-        var id = 0;
         if (click === 0) return;
 
         fetch("/api", {
@@ -42,10 +41,9 @@ export default function CreateNote({ onLoad }: { onLoad: Function }) {
                 return response.json(); // Convertir la respuesta a JSON
             })
             .then((data) => {
-                id = data.id;
-                console.log(id);
-
-                onLoad({ [`${id}`]: createNote });
+                console.log("-> Debug 3");
+                console.log(data);
+                onLoad({ [`${data.id}`]: createNote });
             })
             .catch((error) => console.error("Error connecting to API:", error))
             .finally(() => {

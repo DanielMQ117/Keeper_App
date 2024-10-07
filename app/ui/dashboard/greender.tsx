@@ -7,7 +7,7 @@ export default function Greender() {
     const customStyles = {
         color: "blueviolet",
     };
-    console.log(time);
+    console.log(`-> Time: ${time}`);
 
     useEffect(() => {
         const intervalId = setInterval(() => {

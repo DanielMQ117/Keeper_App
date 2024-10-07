@@ -15,9 +15,6 @@ export default function AllNotes({ note }: { note: Type.AllNotes }) {
     const [allNotes, setAllNotes] = useState<Type.AllNotes>({});
 
     console.log("-> Debug 1");
-    // console.log("Fetching revenue data...");
-    // new Promise((resolve) => setTimeout(resolve, 5000));
-    // console.log("Data fetch completed after 5 seconds.");
 
     useEffect(() => {
         fetch("/api", {
@@ -36,10 +33,8 @@ export default function AllNotes({ note }: { note: Type.AllNotes }) {
             })
             .then((oldNotes) => {
                 setAllNotes(oldNotes); // Convertir de JSON a Obj de JS
-                console.log(oldNotes);
                 console.log("-> Debug 2");
-                console.log(allNotes);
-                console.log("-> Debug 3");
+                console.log(oldNotes);
             })
             .catch((error) =>
                 console.error("Error connecting to API: ", error)
