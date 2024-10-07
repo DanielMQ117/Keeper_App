@@ -1,5 +1,6 @@
 "use server";
 
+import * as Type from "@/app/dashboard/lib/definitions";
 import notes from "./placeholder-data";
 import { promises as fs } from "fs";
 import path from "path";
@@ -11,7 +12,7 @@ export default async function fetchNotes() {
 }
 
 // Función para leer el archivo JSON usando fs.promises
-export async function fetchSavedNotes(): Promise<{}> {
+export async function fetchSavedNotes(): Promise<Type.AllNotes | {}> {
     console.log(db);
     // Si el archivo existe, leer los datos actuales
     try {
@@ -40,4 +41,15 @@ export async function fetchLasdId(data: {}) {
     const biggestKey = Math.max(...intKeys); // Buscamos el numero mas grande
 
     return keys.length !== 0 ? biggestKey + 1 : 0;
+}
+
+export async function deleteNote(removeNoteId: string) {
+    const allNotes = await fetchSavedNotes();
+    const toArrayValues = Object.entries(allNotes);
+    const updateValues = toArrayValues.filter(
+        (note) => note[0] !== removeNoteId
+    );
+    const toObjValues = Object.fromEntries(updateValues);
+    await saveNotes(toObjValues);
+    return true;
 }

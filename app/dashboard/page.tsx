@@ -9,6 +9,7 @@ import { useState } from "react";
 import * as Type from "./lib/definitions";
 import { Suspense } from "react";
 import { NotesSkeleton } from "../ui/skeletons";
+import { mclaren } from "../ui/fonts";
 
 export default function Page() {
     const [newNote, setNewNote] = useState<Type.AllNotes>({});
@@ -22,7 +23,7 @@ export default function Page() {
             <div className="create-area">
                 <CreateNote onLoad={handleIncomingNote} />
             </div>
-            <div className="greender">
+            <div className={`${mclaren.className} greender`}>
                 <Greender />
             </div>
             <div className="container-notes">

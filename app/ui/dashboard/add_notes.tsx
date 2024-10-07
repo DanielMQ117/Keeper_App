@@ -77,7 +77,7 @@ export default function CreateNote({ onLoad }: { onLoad: Function }) {
                     placeholder="Take a note..."
                 />
                 <button disabled={isLoading} type="submit">
-                    {isLoading ? "Adding" : "Add"}
+                    {isLoading ? "⏳" : "+"}
                 </button>
             </form>
         </div>

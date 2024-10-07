@@ -1,5 +1,10 @@
 import { NextResponse } from "next/server";
-import { fetchLasdId, fetchSavedNotes, saveNotes } from "../dashboard/lib/data";
+import {
+    deleteNote,
+    fetchLasdId,
+    fetchSavedNotes,
+    saveNotes,
+} from "../dashboard/lib/data";
 
 // GET: Para leer las notas
 export async function GET() {
@@ -19,4 +24,19 @@ export async function POST(request: Request) {
     await saveNotes(oldNotes);
 
     return NextResponse.json({ message: "Nota añadida con éxito", id: ID });
+}
+
+// DELETE: Para eliminar una nota
+export async function DELETE(request: Request) {
+    console.log("HERE");
+
+    const remobeNote = await request.json();
+    const response = await deleteNote(remobeNote.id);
+
+    return NextResponse.json({
+        message: response
+            ? "Nota eliminada con éxito."
+            : "Error al eliminar la nota.",
+        id: remobeNote.id,
+    });
 }
