@@ -1,5 +1,5 @@
 {
-    "name": "291-keeper-app",
+    "name": "keeper-app",
     "version": "0.1.0",
     "private": true,
     "type": "module",
@@ -19,7 +19,6 @@
         "@types/node": "^20",
         "@types/react": "^18",
         "@types/react-dom": "^18",
-        "eslint": "^8",
         "eslint-config-next": "14.2.10",
         "typescript": "^5"
     }
